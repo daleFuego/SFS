@@ -1,0 +1,5 @@
+package com.defines;
+
+public enum ProductStage {
+	IMPORT, STORAGE, SIFTER, ASSORTMENT, ROASTING, QA_1, COOLING, BLENDING, QA_2, PACKAGING, PALLETIZING, READY
+}

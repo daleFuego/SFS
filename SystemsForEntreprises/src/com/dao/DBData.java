@@ -25,9 +25,9 @@ public class DBData {
 					DefineUtils.DB_PASSWORD);
 			connection.setAutoCommit(false);
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM \"" + DefineUtils.DB_TABLE_COFFEE_PLANTATION + "\"");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM \"" + DefineUtils.DB_TABLE_RESOURCES + "\"");
 			while (rs.next()) {
-				retValue = Integer.parseInt(rs.getString(DefineUtils.DB_COL_COFFEE_RESOURCES));
+				retValue = Integer.parseInt(rs.getString("RESOURCES"));
 			}
 			rs.close();
 			stmt.close();

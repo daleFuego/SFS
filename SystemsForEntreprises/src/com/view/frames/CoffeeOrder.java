@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -29,14 +30,13 @@ public class CoffeeOrder extends JFrame {
 	private JTextField textFieldDeliverySize;
 
 	private JSlider sliderSetDeliverySize;
-
-	public CoffeeOrder() {
+	public CoffeeOrder(JTable deliveryTable) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Order Coffee");
 		setSize(500, 357);
 		setVisible(true);
-
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			setIconImage(ImageIO.read(getClass().getResourceAsStream("/images/icon.png")));
@@ -115,6 +115,7 @@ public class CoffeeOrder extends JFrame {
 					if (DBData.sendDeliveryRequest(sliderSetDeliverySize.getValue())) {
 						JOptionPane.showMessageDialog(null, "Delivery request sent successfully", "",
 								JOptionPane.INFORMATION_MESSAGE);
+						DBData.updateTable(deliveryTable, "SELECT * FROM " + DefineUtils.DB_TABLE_DELIVERIES);
 					} else {
 						JOptionPane.showMessageDialog(null, "Delivery request could not be send", "",
 								JOptionPane.ERROR_MESSAGE);

@@ -13,16 +13,21 @@ import com.view.frames.CoffeeOrder;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class CoffeePlantation extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldCoffeeResources;
+	private JTable tableDeliveries;
 
 	public CoffeePlantation() {
-		setBorder(new TitledBorder(null, "Coffe Plantation Panel", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(null);
 		setLayout(null);
-		setSize(500, 200);
+		setSize(625, 475);
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -31,23 +36,31 @@ public class CoffeePlantation extends JPanel {
 		}
 
 		JButton btnOrderCoffee = new JButton("Order coffee");
-		btnOrderCoffee.setBounds(12, 92, 133, 25);
+		btnOrderCoffee.setBounds(12, 158, 133, 25);
 
 		add(btnOrderCoffee);
 		
 		JButton btnCheckResources = new JButton("Check resources");
 
-		btnCheckResources.setBounds(22, 139, 117, 25);
+		btnCheckResources.setBounds(12, 195, 133, 25);
 		add(btnCheckResources);
 		
 		JLabel lblCoffeResources = new JLabel("Coffe resources in stock:");
-		lblCoffeResources.setBounds(205, 144, 186, 20);
+		lblCoffeResources.setBounds(12, 69, 186, 20);
 		add(lblCoffeResources);
 		
 		textFieldCoffeeResources = new JTextField();
-		textFieldCoffeeResources.setBounds(386, 142, 114, 19);
+		textFieldCoffeeResources.setBounds(195, 13, 114, 19);
 		textFieldCoffeeResources.setColumns(10);
 		add(textFieldCoffeeResources);
+		
+		JScrollPane scrollPaneDeliveries = new JScrollPane();
+		scrollPaneDeliveries.setBounds(12, 252, 601, 152);
+		add(scrollPaneDeliveries);
+		
+		tableDeliveries = new JTable();
+		scrollPaneDeliveries.setViewportView(tableDeliveries);
+		tableDeliveries.setBorder(new TitledBorder(null, "Deliveries", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		btnCheckResources.addActionListener(new ActionListener() {
 			
@@ -61,7 +74,7 @@ public class CoffeePlantation extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CoffeeOrder();				
+				new CoffeeOrder(tableDeliveries);				
 			}
 		});
 	}

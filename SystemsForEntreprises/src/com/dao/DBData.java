@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import com.defines.DefineUtils;
 
@@ -53,7 +57,7 @@ public class DBData {
 					DefineUtils.DB_PASSWORD);
 			PreparedStatement statement = connection.prepareStatement(query);
 			int rowsAffected = connection.prepareStatement(query).executeUpdate();
-			
+
 			statement.close();
 			connection.close();
 
@@ -65,10 +69,38 @@ public class DBData {
 		}
 
 		return false;
+	}
 
-		// update delivery table
+	public static boolean updateTable(JTable table, String query) {
+		try {
+			DriverManager.registerDriver(new org.postgresql.Driver());
 
-		// update status panel
+			Connection connection = DriverManager.getConnection(DefineUtils.DB_NAME, DefineUtils.DB_USERNAME,
+					DefineUtils.DB_PASSWORD);
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet resultSet = statement.executeQuery();
+
+			while (table.getRowCount() > 0) {
+				((DefaultTableModel) table.getModel()).removeRow(0);
+			}
+
+			int columns = resultSet.getMetaData().getColumnCount();
+			while (resultSet.next()) {
+				Object[] row = new Object[columns];
+				for (int i = 1; i <= columns; i++) {
+					row[i - 1] = resultSet.getObject(i);
+				}
+				((DefaultTableModel) table.getModel()).insertRow(resultSet.getRow() - 1, row);
+			}
+
+			resultSet.close();
+			statement.close();
+			connection.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

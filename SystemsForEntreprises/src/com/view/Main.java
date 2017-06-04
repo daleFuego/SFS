@@ -1,8 +1,6 @@
-package com.view.main;
+package com.view;
 
 import com.defines.DefineUtils;
-import com.view.frames.SupplyChainMgmt;
-import com.view.frames.WelcomeScreen;
 
 public class Main {
 

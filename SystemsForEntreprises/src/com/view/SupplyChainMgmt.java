@@ -1,7 +1,8 @@
-package com.view.frames;
+package com.view;
 
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -11,12 +12,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
+import com.dao.DBData;
 import com.defines.DefineUtils;
-import com.view.panels.CoffeeDelivery;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import com.view.panels.Delivery;
+import com.view.panels.Distribution;
+import com.view.panels.Process;
 
 public class SupplyChainMgmt extends JFrame {
 
@@ -41,9 +41,17 @@ public class SupplyChainMgmt extends JFrame {
 		tabbedPaneDelivery.setBounds(5, 5, 624, 408);
 		getContentPane().add(tabbedPaneDelivery);
 		
-		CoffeeDelivery coffeePlantation = new CoffeeDelivery();
-		coffeePlantation.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tabbedPaneDelivery.addTab("Coffe Delivery", null, coffeePlantation, null);
+		Delivery coffeeDelivery = new Delivery();
+		coffeeDelivery.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tabbedPaneDelivery.addTab("Coffee Delivery", null, coffeeDelivery, null);
+		
+		Process process = new Process();
+		process.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tabbedPaneDelivery.addTab("Process", null, process, null);
+		
+		Distribution distribution = new Distribution();
+		distribution.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tabbedPaneDelivery.addTab("Distribution", null, distribution, null);
 		
 		JPanel panelCtrls = new JPanel();
 		panelCtrls.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -60,6 +68,9 @@ public class SupplyChainMgmt extends JFrame {
 		});
 		btnExit.setBounds(272, 6, 89, 23);
 		panelCtrls.add(btnExit);
-		panelCtrls.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnExit}));
+		
+		if(DefineUtils.REFRESH_FROM_DB){
+			DBData.startRefreshTask(coffeeDelivery.tableDeliveries, coffeeDelivery.textFieldCoffeeResources, process.btnStartProcess);
+		}
 	}
 }

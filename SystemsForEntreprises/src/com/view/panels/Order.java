@@ -1,4 +1,4 @@
-package com.view.frames;
+package com.view.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +19,7 @@ import javax.swing.event.ChangeListener;
 import com.dao.DBData;
 import com.defines.DefineUtils;
 
-public class CoffeeOrder extends JFrame {
+public class Order extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public class CoffeeOrder extends JFrame {
 	private JTextField textFieldDeliverySize;
 
 	private JSlider sliderSetDeliverySize;
-	public CoffeeOrder(JTable deliveryTable) {
+	public Order(JTable deliveryTable) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Order Coffee");
@@ -115,7 +115,7 @@ public class CoffeeOrder extends JFrame {
 					if (DBData.sendDeliveryRequest(sliderSetDeliverySize.getValue())) {
 						JOptionPane.showMessageDialog(null, "Delivery request sent successfully", "",
 								JOptionPane.INFORMATION_MESSAGE);
-						DBData.updateTable(deliveryTable, "SELECT * FROM " + DefineUtils.DB_TABLE_DELIVERIES);
+						DBData.updateTableDeliveries(deliveryTable);
 					} else {
 						JOptionPane.showMessageDialog(null, "Delivery request could not be send", "",
 								JOptionPane.ERROR_MESSAGE);

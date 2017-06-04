@@ -1,4 +1,4 @@
-package com.view.frames;
+package com.view;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
